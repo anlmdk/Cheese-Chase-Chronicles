@@ -4,47 +4,53 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    Animator anim;
+
     [SerializeField] float speed = 4f;
-    
+
+    private float horizontalInput, verticalInput;
+
+    private Vector3 movement;
 
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        LeftMove();
-        RightMove();
-        UpMove();
-        DownMove();
+        // Herhangi bir yön tuþuna basýlýp basýlmadýðýný kontrol et
+        bool isMoving = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S);
+
+        // Eðer herhangi bir yön tuþuna basýldýysa yürüme animasyonunu baþlat
+        anim.SetBool("isWalking", isMoving);
+
+        // Yön tuþlarýna basýldýðýnda karakteri hareket ettir
+        Move();
+        Flip();
     }
-    void LeftMove()
+    void Move()
     {
-        if(Input.GetKey(KeyCode.A))
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
+
+        movement = new Vector3(horizontalInput, verticalInput, 0) * speed * Time.deltaTime;
+
+        transform.Translate(movement);
+    }
+    void Flip()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+
+        // Yatay girdiye göre karakterin yüzünü döndürün
+        if (horizontalInput > 0)
         {
-            transform.position += Vector3.left * speed * Time.deltaTime;
+            spriteRenderer.flipX = false; // Saða doðru bakýyor
         }
-    }
-    void RightMove()
-    {
-        if (Input.GetKey(KeyCode.D))
+        else if (horizontalInput < 0)
         {
-            transform.position += Vector3.right * speed * Time.deltaTime;
-        }
-    }
-    void UpMove()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += Vector3.up * speed * Time.deltaTime;
-        }
-    }
-    void DownMove()
-    {
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position += Vector3.down * speed * Time.deltaTime;
+            spriteRenderer.flipX = true; // Sola doðru bakýyor
         }
     }
 }
