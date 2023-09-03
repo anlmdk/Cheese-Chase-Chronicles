@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
         // Eðer herhangi bir yön tuþuna basýldýysa yürüme animasyonunu baþlat
         anim.SetBool("isWalking", isMoving);
 
+        Debug.Log(isMoving);
+
         // Yön tuþlarýna basýldýðýnda karakteri hareket ettir
         Move();
         Flip();
