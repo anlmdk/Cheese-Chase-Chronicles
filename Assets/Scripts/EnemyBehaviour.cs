@@ -12,6 +12,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] float wanderMaxX = 10f;
     [SerializeField] float wanderMinY = -9f; // Y eksenindeki sýnýrlar
     [SerializeField] float wanderMaxY = 9f;
+    [SerializeField] float cheeseDetectionRadius = 10f; // Peynir algýlama yarýçapý
 
     public bool death = false;
     private Vector3 targetPosition;
@@ -39,6 +40,20 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (!death)
         {
+            // Peynir algýlamak için belirli bir yarýçap içindeki nesneleri kontrol edin
+            Collider[] cheeseColliders = Physics.OverlapSphere(transform.position, cheeseDetectionRadius);
+
+            foreach (var collider in cheeseColliders)
+            {
+                if (collider.CompareTag("Cheese"))
+                {
+                    // Peynir algýlandýðýnda doðrudan peynire git
+                    targetPosition = collider.transform.position;
+                    isEating = true;
+                    break; // En yakýn peynire yönlendirildikten sonra dolaþmayý durdurun
+                }
+            }
+
             // Eðer yem yeme iþlemi tamamlandýysa, rastgele dolaþma devam etsin
             if (!isEating)
             {
@@ -75,20 +90,6 @@ public class EnemyBehaviour : MonoBehaviour
         else if (moveDirection.x < 0 && isFacingRight)
         {
             FlipCharacter();
-        }
-
-        // Yakýndaki peyniri kontrol edin ve yeme iþlemi baþlatýn
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10f); // 5 birimlik bir yarýçap içindeki nesneleri kontrol et
-
-        foreach (var collider in hitColliders)
-        {
-            if (collider.CompareTag("Cheese"))
-            {
-                isEating = true;
-                targetPosition = collider.transform.position;
-                Destroy(collider.gameObject); // Peyniri yok et
-                break; // En yakýn peyniri yedikten sonra dolaþmayý durdurun
-            }
         }
     }
 

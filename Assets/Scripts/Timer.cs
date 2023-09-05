@@ -5,9 +5,26 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public static Timer Instance;
+
     public float totalTime = 300.0f; // Toplam zaman (saniye cinsinden)
     private float passingTime = 0.0f; // Geçen zaman (saniye cinsinden)
+
     public TextMeshProUGUI timeText; // TextMeshPro nesnesi
+
+    private bool isTimerRunning = true; // Zamanýn çalýþýp çalýþmadýðýný kontrol etmek için bir bool
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -17,17 +34,30 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        // Zamaný güncelleyin
-        passingTime += Time.deltaTime;
-
-        // Zamaný ekranda gösterin
-        UpdateTimerText();
-
-        // Süre dolduðunda istediðiniz iþlemleri yapabilirsiniz
-        if (passingTime >= totalTime)
+        if (isTimerRunning)
         {
-            // Örneðin, bir þeyleri etkisiz hale getirebilir veya baþka bir iþlem yapabilirsiniz
-            // Örnek: gameObject.SetActive(false);
+            // Zamaný güncelleyin
+            passingTime += Time.deltaTime;
+
+            // Zamaný ekranda gösterin
+            UpdateTimerText();
+
+            // Süre dolduðunda istediðiniz iþlemleri yapabilirsiniz
+            if (passingTime >= totalTime)
+            {
+                // Örneðin, bir þeyleri etkisiz hale getirebilir veya baþka bir iþlem yapabilirsiniz
+                if (GameManager.instance.score > 75)
+                {
+                    GameManager.instance.LevelCompleted();
+                }
+                else
+                {
+                    GameManager.instance.GameOver();
+                }
+
+                // Zamaný durdurun
+                isTimerRunning = false;
+            }
         }
     }
 
@@ -42,5 +72,10 @@ public class Timer : MonoBehaviour
 
         // TextMeshPro nesnesine zamaný güncelleyin
         timeText.text = string.Format("Time:" + " " + "{0:00}:{1:00}", minute, second);
+    }
+    // Karakter öldüðünde bu iþlevi çaðýrabilirsiniz
+    public void StopTimer()
+    {
+        isTimerRunning = false;
     }
 }

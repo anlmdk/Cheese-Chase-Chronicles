@@ -20,7 +20,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Herhangi bir yön tuþuna basýlýp basýlmadýðýný kontrol et
-        bool isMoving = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S);
+        bool isMoving = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ||
+            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow);
 
         // Eðer herhangi bir yön tuþuna basýldýysa yürüme animasyonunu baþlat
         anim.SetBool("isWalking", isMoving);

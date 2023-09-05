@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public GameObject gameOverPanel, nextLevelPanel;
+
+    public PlayerController player;
+
     public TextMeshProUGUI scoreText;
 
     public int score = 0;
 
-
-    void Start()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -24,9 +28,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void LevelCompleted()
     {
-        
+        if (score > 75)
+        {
+            nextLevelPanel.SetActive(true);
+        }
     }
     public void Score()
     {
@@ -37,5 +44,14 @@ public class GameManager : MonoBehaviour
     {
         score -= 5;
         scoreText.text = "Puan: " + score;
+    }
+    public void GameOver()
+    {
+        player.enabled = false;
+
+        Timer.Instance.StopTimer();
+
+        gameOverPanel.SetActive(true);
+
     }
 }

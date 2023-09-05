@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1785439010563398124}
   - component: {fileID: 1785439010563398115}
   - component: {fileID: 7564749162906386347}
-  - component: {fileID: 8791976472417758414}
   - component: {fileID: 3422510827668483314}
+  - component: {fileID: 8791976472417758414}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -214,7 +214,21 @@ MonoBehaviour:
   wanderMaxX: 12
   wanderMinY: -9
   wanderMaxY: 9
+  cheeseDetectionRadius: 10
   death: 0
+--- !u!114 &3422510827668483314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785439010563398127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab00925ce971dd4394635d64056b1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionForce: 0.5
 --- !u!95 &8791976472417758414
 Animator:
   serializedVersion: 4
@@ -235,15 +249,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3422510827668483314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1785439010563398127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab00925ce971dd4394635d64056b1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

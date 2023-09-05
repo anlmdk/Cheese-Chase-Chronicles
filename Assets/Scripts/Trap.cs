@@ -12,25 +12,21 @@ public class Trap : MonoBehaviour
         anim.SetBool("isCatching", false);
     }
 
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // player death
-
             anim.SetBool("isCatching", true);
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            EnemyBehaviour.instance.death = true;
-            Destroy(collision.gameObject);
+            anim.SetBool("isCatching", true);
 
-            // Ölme animasyonunu göster ve düþmaný yok et
-            // ölme animasyonu.SetActive(true);
+            Invoke("OnDestroy", 2f);
         }
+    }
+    private void OnDestroy()
+    {
+        Destroy(gameObject);
     }
 }
